@@ -1,6 +1,9 @@
 class ShortUrl < ApplicationRecord
   before_create :generate_shorted_url
 
+  validates_uniqueness_of :url
+  validates_uniqueness_of :short_url
+
   def short
     "#{ENV['ROOT_URL']}/#{short_url}"
   end
