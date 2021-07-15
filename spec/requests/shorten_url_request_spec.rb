@@ -2,7 +2,10 @@ RSpec.describe "ShortUrl", type: :request do
   describe "create a short url" do
     it "Create a new short url" do
       post("/shorten_url", params: attributes_for(:short_url))
+      short_url_parsed = JSON.parse(response.body)
+
       expect(response).to have_http_status(:success)
+      expect(short_url_parsed['newUrl']).to eql(ShortUrl.last.short_url)
     end
 
     it "can not repeat the same URL" do

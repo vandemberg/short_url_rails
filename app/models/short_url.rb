@@ -6,6 +6,20 @@ class ShortUrl < ApplicationRecord
 
   has_many :clicks
 
+  def self.top_three(start_day, end_day)
+    Click
+      .select("COUNT(short_urls.url) as count_clicks, short_urls.url")
+      .joins(:short_url)
+      .where(created_at: start_day..end_day)
+      .group("short_urls.url")
+      .order(count_clicks: :desc)
+      .limit(3)
+  end
+
+  def self.today_top_three
+    ShortUrl.top_three(Time.now.beginning_of_day, Time.now.end_of_day)
+  end
+
   def short
     "#{ENV['ROOT_URL']}/#{short_url}"
   end
