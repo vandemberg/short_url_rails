@@ -6,7 +6,6 @@ class ShortenUrlController < ApplicationController
       return render(json: { newUrl: short_url.short_url })
     end
 
-
     render({
       json: { message: "Nothing happen. what going on? call the support please"},
       status: 500,

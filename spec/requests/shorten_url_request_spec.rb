@@ -6,7 +6,7 @@ RSpec.describe "ShortUrl", type: :request do
     end
 
     it "can not repeat the same URL" do
-      short_url = build(:short_url)
+      short_url = create(:short_url)
       post("/shorten_url", params: { url: short_url.url })
 
       count_short_urls = ShortUrl.where({ url: short_url.url }).length
@@ -15,11 +15,19 @@ RSpec.describe "ShortUrl", type: :request do
     end
   end
 
-  # describe "redirect a short url to the original" do
-  #   pending "check redirect with a existing short_url #{__FILE__}"
-  # end
+  describe "redirect a short url to the original" do
+    it "should redirect to true URL" do
+      short_url = create(:short_url)
+      get("/#{short_url.short_url}")
 
-  # describe "top ten accessed short urls" do
-  #   pending "list the 10 most accessed URIs #{__FILE__}"
-  # end
+      expect(response).to redirect_to(short_url.url)
+    end
+
+    it "check if when access register a click" do
+      short_url = create(:short_url)
+      get("/#{short_url.short_url}")
+
+      expect(short_url.clicks.count).to eql(1)
+    end
+  end
 end

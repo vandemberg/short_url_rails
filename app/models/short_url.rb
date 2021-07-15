@@ -4,6 +4,8 @@ class ShortUrl < ApplicationRecord
   validates_uniqueness_of :url
   validates_uniqueness_of :short_url
 
+  has_many :clicks
+
   def short
     "#{ENV['ROOT_URL']}/#{short_url}"
   end
