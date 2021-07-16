@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe "Reports", type: :request do
+  before(:each) do
+    ShortUrl.destroy_all
+  end
+
   describe "GET /index" do
     it "check report results for today" do
       short1 = create(:short_url)
@@ -14,6 +18,7 @@ RSpec.describe "Reports", type: :request do
       FactoryBot.create_list(:click, 1, { short_url_id: short4.id })
 
       get("/reports")
+
       report_parsed = JSON.parse(response.body)
 
       expect(response).to have_http_status(:ok)

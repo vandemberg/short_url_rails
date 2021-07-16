@@ -7,10 +7,10 @@ class ShortUrl < ApplicationRecord
   has_many :clicks
 
   def self.top_three(start_day, end_day)
-    Click
+    ShortUrl
       .select("COUNT(short_urls.url) as count_clicks, short_urls.url")
-      .joins(:short_url)
-      .where(created_at: start_day..end_day)
+      .joins(:clicks)
+      .where({ clicks: { created_at: start_day..end_day } })
       .group("short_urls.url")
       .order(count_clicks: :desc)
       .limit(3)
