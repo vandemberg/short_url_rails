@@ -1,8 +1,10 @@
 class ShortUrl < ApplicationRecord
   before_create :generate_shorted_url
 
-  validates_uniqueness_of :url
+  validates_uniqueness_of :url, conditions: -> { where("created_at > ?", (Time.now - 1.year)) }
   validates_uniqueness_of :short_url
+
+  scope :valid, -> { where("created_at > ?", (Time.now - 1.year)) }
 
   has_many :clicks
 

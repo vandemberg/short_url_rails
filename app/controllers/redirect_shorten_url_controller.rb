@@ -1,7 +1,7 @@
 class RedirectShortenUrlController < ApplicationController
   def show
     shorted_url = params[:shorted_url]
-    short_url = ShortUrl.where({ short_url: shorted_url }).first
+    short_url = ShortUrl.where({ short_url: shorted_url }).valid.first
 
     if short_url.present?
       Click.create!(short_url: short_url)
