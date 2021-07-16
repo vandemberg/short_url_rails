@@ -1,24 +1,22 @@
-# README
+# Encurtador de URL
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Primicia
+Você deve prover uma rota para encurtar URLs, e ao acessar a URL encurtada deve redirecionar para a URL original.
 
-Things you may want to cover:
+### Necessário
+- Prover um endpoint que retorne um JSON com o seguinte formato:
+```
+POST: /shorten_url , url: http://minhaurl.com
+{ 
+	newUrl: "http://localhost:3000/url", 
+}
+```
 
-* Ruby version
+- Utilizar um baco de dados para guardar a URL original
+- Contar a quantidade de acessos a URL encurtada
+- Realizar o direcionamento para a URL original pela URL encurtada
+- Após 1 ano a URL deve ser inutilizada (ainda não foi feito)
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```
+Acesso: http://localhost:3000/url -> redirecionado para -> http://minhaurl.com
+```
